@@ -17,8 +17,8 @@ public class StaticGenerator {
 
     /**
      * 通过Hutool进行文件拷贝
-     * @param inputPath
-     * @param outputPath
+     * @param inputPath 输入文件路径
+     * @param outputPath 输出文件路径
      */
     public static void copyFilesByHutool(String inputPath, String outputPath) {
         FileUtil.copy(inputPath, outputPath, false);
@@ -26,8 +26,8 @@ public class StaticGenerator {
 
     /**
      * 递归实现文件拷贝
-     * @param inputPath
-     * @param outputPath
+     * @param inputPath 输入文件路径
+     * @param outputPath 输出文件路径
      */
     public static void copyFileByRecursive(String inputPath, String outputPath) {
         File inputFile = new File(inputPath);
@@ -42,8 +42,8 @@ public class StaticGenerator {
 
     /**
      * 创建目录，遍历文件夹，辅助到目标路径
-     * @param inputFile
-     * @param outputFile
+     * @param inputFile 输入文件
+     * @param outputFile 输出文件
      * @throws IOException
      */
     private static void copyFileByRecursive(File inputFile, File outputFile) throws IOException {

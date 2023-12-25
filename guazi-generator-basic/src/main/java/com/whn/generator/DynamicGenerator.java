@@ -1,6 +1,5 @@
 package com.whn.generator;
 
-import com.whn.model.MainTemplateConfig;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
