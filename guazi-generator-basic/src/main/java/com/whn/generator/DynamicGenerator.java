@@ -9,27 +9,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 动态文件生成类
  */
 public class DynamicGenerator {
-    public static void main(String[] args) throws IOException, TemplateException {
-        // 设置模版的路径
-        String projectPath = System.getProperty("user.dir") + File.separator + "guazi-generator-basic";
-        String inputPath = projectPath + File.separator + "src/main/resources/templates/MainTemplate.java.ftl";
-        String outputPath = projectPath + File.separator + "MainTemplate.java";
-        // 创建数据模型
-        MainTemplateConfig mainTemplateConfig = new MainTemplateConfig();
-        mainTemplateConfig.setAuthor("whn");
-        mainTemplateConfig.setLoop(true);
-        mainTemplateConfig.setOutputText("求和结果为：");
-        doGenerate(inputPath, outputPath, mainTemplateConfig);
-    }
+
     public static  void doGenerate(String inputPath, String outputPath, Object model) throws IOException, TemplateException{
         // new 一个Configuration对象，制定版本号
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_32);

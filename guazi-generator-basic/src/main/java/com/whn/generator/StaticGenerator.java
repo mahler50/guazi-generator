@@ -14,14 +14,6 @@ import java.nio.file.StandardCopyOption;
  */
 public class StaticGenerator {
 
-    public static void main(String[] args) {
-        String projectPath = System.getProperty("user.dir");
-        // 输入路径
-        String inputPath = projectPath + File.separator + "guazi-generator-demo-projects" + File.separator + "acm-template";
-        // 输出路径
-        String outputPath = projectPath;
-        copyFilesByHutool(inputPath, outputPath);
-    }
 
     /**
      * 通过Hutool进行文件拷贝
