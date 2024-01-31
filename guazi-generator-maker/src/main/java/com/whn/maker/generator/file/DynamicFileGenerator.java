@@ -1,4 +1,4 @@
-package com.whn.generator;
+package com.whn.maker.generator.file;
 
 import cn.hutool.core.io.FileUtil;
 import freemarker.template.Configuration;
@@ -8,12 +8,13 @@ import freemarker.template.TemplateException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
  * 动态文件生成类
  */
-public class DynamicGenerator {
+public class DynamicFileGenerator {
 
     public static void doGenerate(String inputPath, String outputPath, Object model) throws IOException, TemplateException{
         // new 一个Configuration对象，制定版本号
@@ -35,9 +36,9 @@ public class DynamicGenerator {
         }
 
         // 生成
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(Paths.get(outputPath)), StandardCharsets.UTF_8));
-        template.process(model, out);
+        BufferedWriter output = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(Paths.get(outputPath)), StandardCharsets.UTF_8));
+        template.process(model, output);
 
-        out.close();
+        output.close();
     }
 }
