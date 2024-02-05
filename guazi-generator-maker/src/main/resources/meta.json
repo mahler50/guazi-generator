@@ -6,8 +6,9 @@
   "author": "whn",
   "createTime": "2024-1-28",
   "fileConfig": {
-    "inputRootPath": "D:/JAVA/workspace/guazi-generator/guazi-generator-demo-projects/acm-template-pro",
+    "inputRootPath": ".source/acm-template-pro",
     "outputRootPath": "generated",
+    "sourceRootPath": "D:/JAVA/workspace/guazi-generator/guazi-generator-demo-projects/acm-template-pro",
     "type": "dir",
     "files": [
       {
