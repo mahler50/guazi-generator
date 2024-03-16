@@ -1,5 +1,6 @@
 ### Custom Template
 .idea
+.temp
 generated
 target
 guazi-generator.iml

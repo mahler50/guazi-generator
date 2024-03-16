@@ -1,6 +1,5 @@
 package com.whn.maker.generator.file;
 
-import com.whn.maker.model.DataModel;
 import freemarker.template.TemplateException;
 
 import java.io.File;
