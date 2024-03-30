@@ -1,0 +1,7 @@
+# 对象存储
+cos:
+  client:
+    accessKey: AKID2yoUe1GZmk7QdEoRt8VkSzMXWJk4JPL9
+    secretKey: hDYik298zgBQP7a0GJF3e0gATdqvlPvD
+    region: ap-nanjing
+    bucket: guazi-1325255224
