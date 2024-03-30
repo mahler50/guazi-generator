@@ -2,6 +2,7 @@ package com.whn.maker.generator.main;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.util.ZipUtil;
 import com.whn.maker.generator.JarGenerator;
 import com.whn.maker.generator.ScriptGenerator;
 import com.whn.maker.generator.file.DynamicFileGenerator;
@@ -19,6 +20,10 @@ public abstract class GenerateTemplate {
         // 0、输出路径
         String projectPath = System.getProperty("user.dir");
         String outputPath = projectPath + File.separator + "generated" + File.separator +meta.getName();
+        doGenerate(meta, outputPath);
+    }
+
+    public void doGenerate(Meta meta, String outputPath) throws IOException, TemplateException, InterruptedException {
         if (!FileUtil.exist(outputPath)) {
             FileUtil.mkdir(outputPath);
         }
@@ -46,7 +51,7 @@ public abstract class GenerateTemplate {
      * @param jarPath
      * @param shellOutputFilePath
      */
-    protected void buildDist(String outputPath, String sourceCopyDestPath, String jarPath, String shellOutputFilePath) {
+    protected String buildDist(String outputPath, String sourceCopyDestPath, String jarPath, String shellOutputFilePath) {
         String distOutputPath = outputPath + "-dist";
         // 拷贝jar包
         String targetAbsolutePath = distOutputPath + File.separator + "target";
@@ -58,6 +63,7 @@ public abstract class GenerateTemplate {
         FileUtil.copy(shellOutputFilePath + ".bat", distOutputPath, true);
         // 拷贝模板文件
         FileUtil.copy(sourceCopyDestPath, distOutputPath, true);
+        return distOutputPath;
     }
 
     /**
@@ -97,8 +103,7 @@ public abstract class GenerateTemplate {
      */
     protected void generateCode(Meta meta, String outputPath) throws IOException, TemplateException {
         // 读取 resource 目录
-        ClassPathResource classPathResource = new ClassPathResource("");
-        String inputResourcePath = classPathResource.getAbsolutePath();
+        String inputResourcePath = "";
 
         // Java基础包路径
         String outputBasePackage = meta.getBasePackage();
@@ -127,6 +132,11 @@ public abstract class GenerateTemplate {
         // cli.command.ListCommand
         inputFilePath = inputResourcePath + File.separator + "templates/java/cli/command/ListCommand.java.ftl";
         outputFilePath = outputBaseJavaPackagePath + "/cli/command/ListCommand.java";
+        DynamicFileGenerator.doGenerate(inputFilePath, outputFilePath, meta);
+
+        // cli.command.JsonGenerateCommand
+        inputFilePath = inputResourcePath + File.separator + "templates/java/cli/command/JsonGenerateCommand.java.ftl";
+        outputFilePath = outputBaseJavaPackagePath + "/cli/command/JsonGenerateCommand.java";
         DynamicFileGenerator.doGenerate(inputFilePath, outputFilePath, meta);
 
         // cli.CommandExecutor
@@ -176,5 +186,16 @@ public abstract class GenerateTemplate {
         String sourceCopyDestPath = outputPath +File.separator + ".source";
         FileUtil.copy(sourceRootPath, sourceCopyDestPath, false);
         return sourceCopyDestPath;
+    }
+
+    /**
+     * 制作压缩包
+     * @param outputPath
+     * @return
+     */
+    protected String buildZip(String outputPath) {
+        String zipPath =  outputPath + ".zip";
+        ZipUtil.zip(outputPath, zipPath);
+        return zipPath;
     }
 }

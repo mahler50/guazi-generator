@@ -1,0 +1,3 @@
+TemplateMaker 中对文件的生成，如对已生成好模板的文件，二次制作时该模板文件及其源文件未修改，程序会默认此类文件为静态生成
+
+TemplateMaker 中对 application.yml文件中重名的模型配置无法准确区分

@@ -1,6 +1,7 @@
 package com.whn.maker.generator.file;
 
 import cn.hutool.core.io.FileUtil;
+import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -16,7 +17,54 @@ import java.nio.file.Paths;
  */
 public class DynamicFileGenerator {
 
-    public static void doGenerate(String inputPath, String outputPath, Object model) throws IOException, TemplateException{
+    /**
+     * 根据相对路径生成文件
+     * @param relativeInputPath
+     * @param outputPath
+     * @param model
+     * @throws IOException
+     * @throws TemplateException
+     */
+    public static void doGenerate(String relativeInputPath, String outputPath, Object model) throws IOException, TemplateException{
+        // new 一个Configuration对象，制定版本号
+        Configuration configuration = new Configuration(Configuration.VERSION_2_3_32);
+
+        int lastSplitIndex = relativeInputPath.lastIndexOf("/");
+        String basePackagePath = relativeInputPath.substring(0, lastSplitIndex);
+        String templateName = relativeInputPath.substring(lastSplitIndex + 1);
+
+        ClassTemplateLoader classTemplateLoader = new ClassTemplateLoader(DynamicFileGenerator.class, basePackagePath);
+        configuration.setTemplateLoader(classTemplateLoader);
+
+        // 设置模版文件使用的字符集
+        configuration.setDefaultEncoding("utf-8");
+        configuration.setNumberFormat("0.######");
+
+        // 创建模板对象，加载指定模板
+        Template template = configuration.getTemplate(templateName, "UTF-8");
+
+        // 文件不存在则创建文件和父目录
+        if (!FileUtil.exist(outputPath)) {
+            FileUtil.touch(outputPath);
+        }
+
+        // 生成
+        BufferedWriter output = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(Paths.get(outputPath)), StandardCharsets.UTF_8));
+        template.process(model, output);
+
+        output.close();
+    }
+
+    /**
+     * 生成文件
+     * @param inputPath
+     * @param outputPath
+     * @param model
+     * @throws IOException
+     * @throws TemplateException
+     */
+    @Deprecated
+    public static void doGenerateByPath(String inputPath, String outputPath, Object model) throws IOException, TemplateException{
         // new 一个Configuration对象，制定版本号
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_32);
         // 设置模版的路径

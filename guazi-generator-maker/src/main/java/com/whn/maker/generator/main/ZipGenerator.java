@@ -1,11 +1,12 @@
-package com.whn.maker.generator;
+package com.whn.maker.generator.main;
 
-import com.whn.maker.generator.main.GenerateTemplate;
-
-public class MainGenerator extends GenerateTemplate {
+/**
+ * 生成代码生成器压缩包
+ */
+public class ZipGenerator extends GenerateTemplate{
     @Override
     protected String buildDist(String outputPath, String sourceCopyDestPath, String jarPath, String shellOutputFilePath) {
         String distPath = super.buildDist(outputPath, sourceCopyDestPath, jarPath, shellOutputFilePath);
-        return distPath;
+        return super.buildZip(distPath);
     }
 }
